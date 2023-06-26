@@ -11,7 +11,7 @@ Repository-ul cu codul sursa: https://github.com/roxanacondret19/Licenta_program
 
 Acum serverul va rula pe http://localhost:8081
 
-*Client
+* Client
 1. cd web-client
 2. npm install (pentru a instala dependintele)
 3. npm run dev (pentru a porni clientul)
