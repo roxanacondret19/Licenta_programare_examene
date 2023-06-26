@@ -73,7 +73,7 @@ export default {
             {start: new Date(e.startDate), end: new Date(e.endDate)},
             {start: new Date(args.start), end: new Date(args.end)})
         );
-        if (existingExam || props.currentUser.rol === "Profesor") {
+        if (existingExam) {
           calendarRef.value.control.clearSelection();
           return;
         }
@@ -153,7 +153,7 @@ export default {
 
       await emit('get-by-id', e.data.id);
       await new Promise(resolve => setTimeout(resolve, 1000));
-      if (props.selectedExam.creatorId !== props.currentUser.id || props.currentUser.rol === "Profesor" &&  props.currentUser.rol !== "Admin") return;
+      if (props.selectedExam.creatorId !== props.currentUser.id && props.currentUser.rol !== "Admin") return;
       const sala = props.listaSali.find(s => s.id === props.selectedExam.salaId);
       const salaData = {id: sala.id, name: sala.nume}
       const disciplina = props.listaDiscipline.find(d => d.id === props.selectedExam.disciplinaId);

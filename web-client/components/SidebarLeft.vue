@@ -18,7 +18,7 @@
         <p>Sali</p>
       </a>
       <div @click="goToProgrameazaExamen" class="button">Programeaza examen</div>
-      <div class="button" @click="genereazaListaExamene">Genereaza lista examene</div>
+      <div v-if="listaExamene.length > 0" class="button" @click="genereazaListaExamene">Genereaza lista examene</div>
     </div>
   </div>
 </template>
@@ -27,6 +27,29 @@
 import ExamsService from "~/services/ExamsService";
 
 export default {
+  data: () => {
+    return {
+      listaExamene: [],
+      
+    };
+  },
+  async mounted() {
+    let examene;
+     switch (this.user.rol) {
+        case "Sef_An":
+          examene = await ExamsService.getAllFutureScheduledExamsForUser(this.$api, this.user.id);
+          break;
+        case "Profesor":
+          examene = await ExamsService.getAllFutureScheduledExamsForProfesor(this.$api, this.user.id);
+          break;
+        case "Admin":
+          examene = await ExamsService.getAllFutureScheduledExamsForAdmin(this.$api, this.user.id);
+          break;
+        default:
+          break;
+     }
+     this.listaExamene = examene;
+  },
   methods: {
     async genereazaListaExamene() {
     let examene;
@@ -43,6 +66,7 @@ export default {
         default:
           break;
      }
+     this.listaExamene = examene;
       this.download(this.makeCsv(examene));
     },
     download(data) {

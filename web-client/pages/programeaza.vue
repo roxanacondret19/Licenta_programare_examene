@@ -71,10 +71,7 @@ export default {
       console.log(error);
     } finally {
       this.loading = false;
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      if (this.user.rol === "Profesor") {
-        alert("Ca si profesor nu vei avea posibilitatea de a programa nici un examen!");
-      }
+    
     }
   },
   computed: {
